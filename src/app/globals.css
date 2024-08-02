@@ -1,0 +1,27 @@
+body {
+  background-color: #FAFAF8;
+}
+
+.main {
+  padding: 5rem;
+  font-family: 'Roboto', sans-serif;  
+}
+
+.choose {
+  font-size: 1.2rem;
+}
+
+.voice-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.input-box {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #FAFAF8;
+}
