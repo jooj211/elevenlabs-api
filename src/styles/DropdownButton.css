@@ -16,3 +16,104 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.labels {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.selected-voice {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.voice-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #4F5D9D;
+    margin-right: 1rem;
+}
+
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    border-radius: 9999px;
+    margin-right: 0.5rem;
+}
+
+.label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    border-radius: 9999px;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.label::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+}
+
+.label:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.voice-labels {
+    margin-left: auto;
+}
+
+.category {
+    background-color: #EBD6D1;
+    color: #000;
+}
+
+.gender {
+    background-color: #F7E3A4;
+    color: black;
+}
+
+.age {
+    background-color: #A6D2A2;
+    color: black;
+}
+
+.accent {
+    background-color: #F7A4A4;
+    color: black;
+}
+
+.description {
+    background-color: #A4A4F7;
+    color: black;
+}
+
+.use_case {
+    background-color: #cfdd4a;
+    color: black;
+}

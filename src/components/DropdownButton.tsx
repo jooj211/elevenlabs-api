@@ -1,8 +1,8 @@
 "use client";
 
 import { generatePreview } from "@/lib/elevenLabsService";
-import { DownOutlined, PlayCircleOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Dropdown, MenuProps, message, Space, Spin } from "antd";
+import { DownOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, message, Space, Spin } from "antd";
 import React, { useState } from "react";
 import "../styles/DropdownButton.css";
 import { useVoiceContext } from "./VoiceContext";
@@ -10,27 +10,20 @@ import { useVoiceContext } from "./VoiceContext";
 const DropdownButton: React.FC = () => {
   const { voices, selectedVoice, setSelectedVoice } = useVoiceContext();
   const [loading, setLoading] = useState(false);
+  const orderedKeys = ['category', 'use_case', 'accent', 'gender', 'age', 'description'];
 
-  const items: MenuProps["items"] = voices.map((voice) => ({
-    label: voice.name,
-    key: voice.voice_id,
-    icon: <UserOutlined />,
-  }));
-
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
-    const selected = voices.find((voice) => voice.voice_id === e.key);
+  const handleMenuClick: any = (e: any) => {
+    console.log('e:', e);
+    const selected = voices.find((voice) => voice.voice_id === e.voice_id);
     if (selected) {
       setSelectedVoice(selected);
       message.success(`Voz selecionada: ${selected.name}`);
       console.log('Voz selecionada:', selected);
-  }
+    }
   };
 
-  const handlePreviewClick = async () => {
-    if (!selectedVoice) {
-      message.error("Nenhuma voz selecionada!");
-      return;
-    }
+  const handlePreviewClick = async (event: React.MouseEvent) => {
+    event.stopPropagation();
 
     try {
       setLoading(true);
@@ -45,9 +38,43 @@ const DropdownButton: React.FC = () => {
     }
   };
 
+  
+  const formatLabel = (label: string) => {
+    return label
+    .split('_') // Separa os sublinhados
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza cada palavra
+    .join(' '); // Junta novamente com espaços
+  }
+  
+  const renderLabels = (labels: Record<string, string>) => {
+    return orderedKeys.map((key) => {
+      if (labels[key]) {
+        return (
+          <span key={key} className={`label ${key.toLowerCase()}`} data-label={formatLabel(key)}>
+            {labels[key]}
+          </span>
+        );
+      }
+      return null;
+    });
+  };
+
+  const menu = (
+    <Menu className="custom-menu">
+      {voices.map(voice => (
+        <Menu.Item className="menu-item" key={voice.name} onClick={() => handleMenuClick(voice)}>
+          <div className="voice-item">
+            <span className="voice-name">{voice.name}</span>
+            <div className="voice-labels">{renderLabels(voice.labels)}</div>
+          </div>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <div className="parent-div">
-      <Dropdown menu={{ items, onClick: handleMenuClick }} className="dropdown-menu">
+      <Dropdown overlay={menu} trigger={['click']} className="dropdown-menu">
         <Button className="voice-button">
           <Space className="space">
             {selectedVoice && (
@@ -60,13 +87,17 @@ const DropdownButton: React.FC = () => {
                     onClick={handlePreviewClick}
                   />
                 )}
-                <div className="voice-and-labels">
-                <span className="voice-name">{selectedVoice.name}</span>
-                <div className="labels">
-                {selectedVoice.labels && Object.entries(selectedVoice.labels).map(([key, value]) => (
-                  <span key={key} className={`label ${key.toLowerCase()}`}>{value as React.ReactNode}</span>
-                ))}
-                </div>
+                <div className="selected-voice">
+                  <span className="voice-name">{selectedVoice.name}</span>
+                  <div className="labels">
+                    <span key="category"
+                          className={`label category`}
+                          data-label={formatLabel('category')}
+                    >
+                      {selectedVoice.category}
+                    </span>
+                    {selectedVoice.labels && renderLabels(selectedVoice.labels)}
+                  </div>
                 </div>
               </>
             )}

@@ -50,78 +50,25 @@ body {
   cursor: pointer;
 }
 
-.voice-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #4F5D9D;
-  margin-right: 1rem;
-}
 
-.label {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  border-radius: 9999px;
-  margin-right: 0.5rem;
-}
-
-.female {
-  background-color: #DEE4E7;
-  color: #000000;
-}
-
-.english {
-  background-color: #EBD6D1;
-  color: #000000;
-}
 
 .loading {
   font-size: 1.5rem;
   color: #4F5D9D;
 }
 
-.generate-button {
-  padding: 0.5rem 0;
-  font-size: 2rem;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--color-primary-500);
-  color: black;
-  cursor: pointer;
-}
-
 .voice-selector {
   min-height: 100rem;
 }
 
-/* Example for other dynamic labels */
-.otherLabel1 {
-  background-color: #C0C0C0;
-  color: #FFFFFF;
-}
 
-.otherLabel2 {
-  background-color: #A0A0A0;
-  color: #FFFFFF;
-}
 
-.voice-and-labels {
-  display: flex;
-  flex-direction: column;
-}
-
-.labels {
-  display: flex;
-  flex-direction: row;
-}
 
 .parent-div {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem 0;
   box-sizing: border-box;
 }
 
@@ -141,27 +88,18 @@ body {
   width: 100%;
 }
 
-.voice-and-labels {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-left: 10px;
-}
-
 .voice-name {
   font-size: 1.25rem;
   font-weight: bold;
   color: #4F5D9D;
   margin-right: 1rem;
   white-space: nowrap;
-  /* Prevents text from breaking into a new line */
 }
 
 .labels {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  /* Allows the labels to wrap */
 }
 
 .label {
@@ -173,20 +111,28 @@ body {
   border-radius: 9999px;
   margin-right: 0.5rem;
   background-color: #EBD6D1;
-  /* Default color, customize as needed */
   color: #000;
   word-wrap: break-word;
-  /* Ensures that long words break */
 }
 
-.female {
-  background-color: #DEE4E7;
-  color: #000;
+.voice-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+.custom-menu {
+  max-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.english {
-  background-color: #EBD6D1;
-  color: #000;
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .play-icon {

@@ -69,26 +69,11 @@ export const generateSpeech = async (
 export const generatePreview = async (
   preview_url: string
 ): Promise<string> => {
-  // CORS proxy URL (if necessary)
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Replace with your own proxy if needed
-  const url = proxyUrl + preview_url;
-
-  const headers = {
-    Accept: "audio/mpeg",
-    "xi-api-key": process.env.NEXT_PUBLIC_ELEVEN_LABS_API_KEY || "", // Ensure this key is valid
-    Origin: window.location.origin, // Add the Origin header to specify the request's origin
-    "x-requested-with": "XMLHttpRequest", // Add the x-requested-with header
-  };
-
   try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers,
-    });
+    const response = await fetch(preview_url);
 
     if (!response.ok) {
-      console.error(`HTTP Error: ${response.status} ${response.statusText}`);
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
+      throw new Error(`Error: ${response.status}`);
     }
 
     const audioBlob = await response.blob();
@@ -100,3 +85,4 @@ export const generatePreview = async (
     throw error;
   }
 };
+
