@@ -1,10 +1,3 @@
-
-export interface Voice {
-    voice_id: string;
-    name: string;
-    description: string;
-}
-
 export interface VoiceSettings {
     stability: number;
     similarity_boost: number;
@@ -15,9 +8,9 @@ export interface GenerateSpeechResponse {
 }
 
 export interface VoiceContextType {
-    voices: Voice[];
-    selectedVoice: Voice | null;
-    setSelectedVoice: (voice: Voice) => void;
+    voices: any[];
+    selectedVoice: any | null;
+    setSelectedVoice: (voice: any) => void;
 }
 
 export interface SpeechResponse {

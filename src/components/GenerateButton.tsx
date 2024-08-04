@@ -1,13 +1,15 @@
 "use client";
 
 import { generateSpeech } from "@/lib/elevenLabsService";
-import { Button, message } from "antd";
-import React from "react";
+import { PlayCircleOutlined } from "@ant-design/icons";
+import { message, Spin } from "antd";
+import React, { useState } from "react";
 import "../styles/DropdownButton.css";
 import { useVoiceContext } from "./VoiceContext";
 
 export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
   const { selectedVoice } = useVoiceContext();
+  const [loading, setLoading] = useState(false);
 
   const handleGenerateSpeech = async () => {
     if (!selectedVoice) {
@@ -21,13 +23,10 @@ export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
     }
 
     try {
-      const voiceSettings = {
-        stability: 0.5,
-        similarity_boost: 0.75,
-      };
-
-      const audioUrl = await generateSpeech(selectedVoice.voice_id, text, voiceSettings);
+      setLoading(true);
+      const audioUrl = await generateSpeech(selectedVoice.voice_id, text);
       const audio = new Audio(audioUrl);
+      setLoading(false);
       audio.play();
 
       message.success("Fala gerada com sucesso!");
@@ -36,7 +35,15 @@ export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
     }
   };
 
-  return <Button onClick={handleGenerateSpeech}>Gerar fala</Button>;
+  return (
+    <>
+      {loading ? (
+        <Spin className="loading" />
+      ) : (
+        <PlayCircleOutlined className="generate-button" onClick={handleGenerateSpeech} style={{ opacity: !text.trim() ? 0 : undefined }} />
+      )}
+    </>
+  );
 };
 
 export default GenerateButton;

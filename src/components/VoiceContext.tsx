@@ -5,17 +5,12 @@ import { VoiceContextType } from '@/types/ElevenLabs';
 import TextArea from 'antd/es/input/TextArea';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-interface Voice {
-  voice_id: string;
-  name: string;
-  description: string;
-}
 
 const VoiceContext = createContext<VoiceContextType | undefined>(undefined);
 
 export const VoiceProvider: React.FC<{}> = () => {
-  const [voices, setVoices] = useState<Voice[]>([]);
-  const [selectedVoice, setSelectedVoice] = useState<Voice | null>(null);
+  const [voices, setVoices] = useState<any[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<any | null>(null);
   const [text, setText] = useState<string>('');
 
   useEffect(() => {
@@ -23,7 +18,7 @@ export const VoiceProvider: React.FC<{}> = () => {
       try {
         const fetchedVoices = await fetchVoices();
         setVoices(fetchedVoices);
-        setSelectedVoice(fetchedVoices[0] || null); // Default to first voice
+        console.log('Voices:', fetchedVoices);
       } catch (error) {
         console.error('Error fetching voices:', error);
       }

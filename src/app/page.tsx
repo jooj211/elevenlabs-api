@@ -11,7 +11,6 @@ const Page = () => {
       <Card>
         <h1>Text to Speech Converter</h1>
         <VoiceProvider />
-
       </Card>
     </div>
   );

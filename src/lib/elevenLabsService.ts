@@ -1,5 +1,4 @@
 import axios from "axios";
-import { SpeechResponse, Voice, VoiceSettings } from "@/types/ElevenLabs";
 
 const ELEVEN_LABS_API_URL = "https://api.elevenlabs.io/v1";
 const API_KEY = process.env.NEXT_PUBLIC_XI_API_KEY;
@@ -20,7 +19,7 @@ const instance = axios.create({
   },
 });
 
-export const fetchVoices = async (): Promise<Voice[]> => {
+export const fetchVoices = async (): Promise<any[]> => {
   try {
     const response = await instance.get('/voices');
     return response.data.voices;
@@ -33,8 +32,7 @@ export const fetchVoices = async (): Promise<Voice[]> => {
 
 export const generateSpeech = async (
   voiceId: string,
-  text: string,
-  voiceSettings: VoiceSettings
+  text: string
 ): Promise<string> => {
   const url = `${ELEVEN_LABS_API_URL}/text-to-speech/${voiceId}`;
   const headers = {
@@ -44,8 +42,7 @@ export const generateSpeech = async (
   };
   const data = {
     text,
-    model_id: "eleven_monolingual_v1", // You can choose another model
-    voice_settings: voiceSettings,
+    model_id: "eleven_multilingual_v2",
   };
 
   try {
@@ -59,13 +56,47 @@ export const generateSpeech = async (
       throw new Error(`Erro: ${response.status}`);
     }
 
-    // Convert the response to an audio blob
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
 
     return audioUrl;
   } catch (error) {
     console.error("Falha ao gerar fala:", error);
+    throw error;
+  }
+};
+
+export const generatePreview = async (
+  preview_url: string
+): Promise<string> => {
+  // CORS proxy URL (if necessary)
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Replace with your own proxy if needed
+  const url = proxyUrl + preview_url;
+
+  const headers = {
+    Accept: "audio/mpeg",
+    "xi-api-key": process.env.NEXT_PUBLIC_ELEVEN_LABS_API_KEY || "", // Ensure this key is valid
+    Origin: window.location.origin, // Add the Origin header to specify the request's origin
+    "x-requested-with": "XMLHttpRequest", // Add the x-requested-with header
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP Error: ${response.status} ${response.statusText}`);
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    return audioUrl;
+  } catch (error) {
+    console.error("Failed to generate speech preview:", error);
     throw error;
   }
 };
