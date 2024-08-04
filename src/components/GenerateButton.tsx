@@ -40,7 +40,13 @@ export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
       {loading ? (
         <Spin className="loading" />
       ) : (
-        <PlayCircleOutlined className="play-icon" onClick={handleGenerateSpeech} style={{ opacity: !text.trim() ? 0 : undefined }} />
+        <PlayCircleOutlined
+        className="play-icon" 
+        onClick={!text.trim() ? undefined : handleGenerateSpeech}
+        style={{ 
+          opacity: !text.trim() ? 0 : undefined,
+          cursor: !text.trim() ? 'default' : 'pointer'
+        }} />
       )}
     </>
   );
