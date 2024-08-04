@@ -3,8 +3,8 @@ import axios from "axios";
 const ELEVEN_LABS_API_URL = "https://api.elevenlabs.io/v1";
 const API_KEY = process.env.NEXT_PUBLIC_XI_API_KEY;
 
-console.log('Process Base URL: ' + process.env.NEXT_PUBLIC_BASE_URL);
-console.log('Process API Key: ' + process.env.NEXT_PUBLIC_XI_API_KEY);
+// console.log('Process Base URL: ' + process.env.NEXT_PUBLIC_BASE_URL);
+// console.log('Process API Key: ' + process.env.NEXT_PUBLIC_XI_API_KEY);
 
 if (!API_KEY) {
   console.error("Chave API não encontrada. Por favor, a defina nas suas variáveis de ambiente.");

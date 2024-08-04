@@ -18,7 +18,7 @@ export const VoiceProvider: React.FC<{}> = () => {
       try {
         const fetchedVoices = await fetchVoices();
         setVoices(fetchedVoices);
-        console.log('Voices:', fetchedVoices);
+        // console.log('Voices:', fetchedVoices);
       } catch (error) {
         console.error('Error fetching voices:', error);
       }
