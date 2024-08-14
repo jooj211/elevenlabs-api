@@ -1,34 +1,43 @@
-.dropdown-menu {
-    background-color: #FAFAF8;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.voice-list-container {
     max-width: 50rem;
-    min-height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem;
+    padding: 1rem 0;
     min-width: 200px;
 }
 
-.space {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.labels {
+.voice-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
 }
 
+.loading,
+.play-icon {
+    padding-right: 1rem;
+}
 
-.selected-voice {
+.list-item {
+    padding-left: 1rem;
+}
+
+.voice-item:hover {
+    background-color: #f0f0f0;
+}
+
+.voice-item.selected {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+}
+
+.voice-header {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
     align-items: center;
-    margin-left: 10px;
+    justify-content: space-between;
 }
 
 .voice-name {
@@ -38,19 +47,31 @@
     margin-right: 1rem;
 }
 
-
-.label {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    border-radius: 9999px;
-    margin-right: 0.5rem;
+.preview-button {
+    display: flex;
+    justify-content: space-between;
 }
 
+.right-side {
+    display: flex;
+    flex-direction: row;
+}
+
+.play-icon {
+    font-size: 1.5rem;
+    color: #4F5D9D;
+    cursor: pointer;
+}
+
+.labels-container {
+    display: flex;
+    padding: 1rem;
+    margin-bottom: 0.2rem;
+    align-items: center;
+}
+
+
 .label {
-    position: relative;
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
@@ -58,7 +79,9 @@
     line-height: 1rem;
     border-radius: 9999px;
     margin-right: 0.5rem;
+    margin-top: 0.25rem;
     cursor: pointer;
+    position: relative;
 }
 
 .label::after {
@@ -82,10 +105,6 @@
 .label:hover::after {
     opacity: 1;
     visibility: visible;
-}
-
-.voice-labels {
-    margin-left: auto;
 }
 
 .category {
@@ -116,4 +135,10 @@
 .use_case {
     background-color: #cfdd4a;
     color: black;
+}
+
+.loading {
+    font-size: 1.5rem;
+    color: #4F5D9D;
+    margin-left: 1rem;
 }

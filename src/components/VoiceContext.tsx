@@ -1,4 +1,4 @@
-import DropdownButton from '@/components/DropdownButton';
+import VoiceList from '@/components/VoiceList';
 import { GenerateButton } from '@/components/GenerateButton';
 import { fetchVoices } from '@/lib/elevenLabsService';
 import { VoiceContextType } from '@/types/ElevenLabs';
@@ -31,7 +31,7 @@ export const VoiceProvider: React.FC<{}> = () => {
     <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice }}>
           <div className="voice-container">
             <p className="voice-choice">Selecione uma voz</p>
-            <DropdownButton />
+            <VoiceList />
           </div>
           <div className="input-container">
             <TextArea placeholder="Enter text" rows={2} className="input-box" onChange={(e) => setText(e.target.value)} />

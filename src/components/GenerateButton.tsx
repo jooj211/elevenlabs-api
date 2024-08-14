@@ -4,7 +4,7 @@ import { generateSpeech } from "@/lib/elevenLabsService";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import { message, Spin } from "antd";
 import React, { useState } from "react";
-import "../styles/DropdownButton.css";
+import "../styles/VoiceList.css";
 import { useVoiceContext } from "./VoiceContext";
 
 export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
