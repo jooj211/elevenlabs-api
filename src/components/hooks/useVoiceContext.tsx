@@ -1,17 +1,21 @@
-import VoiceList from '@/components/VoiceList';
-import { GenerateButton } from '@/components/GenerateButton';
 import { fetchVoices } from '@/lib/elevenLabsService';
 import { VoiceContextType } from '@/types/ElevenLabs';
-import TextArea from 'antd/es/input/TextArea';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-
+import { createContext, useContext, useEffect, useState } from 'react';
+import { ActiveFilter } from '@/types/ElevenLabs';
 
 const VoiceContext = createContext<VoiceContextType | undefined>(undefined);
 
-export const VoiceProvider: React.FC<{}> = () => {
+export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [voices, setVoices] = useState<any[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<any | null>(null);
   const [text, setText] = useState<string>('');
+  const [activeFilters, setActiveFilters] = useState<ActiveFilter>({
+    category: null,
+    gender: null,
+    accent: null,
+    age: null,
+    use_case: null,
+});
 
   useEffect(() => {
     const loadVoices = async () => {
@@ -28,15 +32,8 @@ export const VoiceProvider: React.FC<{}> = () => {
   }, []);
 
   return (
-    <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice }}>
-          <div className="voice-container">
-            <p className="voice-choice">Selecione uma voz</p>
-            <VoiceList />
-          </div>
-          <div className="input-container">
-            <TextArea placeholder="Enter text" rows={2} className="input-box" onChange={(e) => setText(e.target.value)} />
-            <GenerateButton text={text} />
-          </div>
+    <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice, text, setText, activeFilters, setActiveFilters }}>
+      {children}
     </VoiceContext.Provider>
   );
 };

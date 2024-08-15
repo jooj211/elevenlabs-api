@@ -145,3 +145,16 @@ body {
   font-size: 1.5rem;
   color: #4F5D9D;
 }
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 50rem;
+}
+
+.filter-select {
+  * {
+    max-width: 8rem;
+  }
+}

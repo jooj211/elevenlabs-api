@@ -5,7 +5,7 @@ import { PlayCircleOutlined } from "@ant-design/icons";
 import { message, Spin } from "antd";
 import React, { useState } from "react";
 import "../styles/VoiceList.css";
-import { useVoiceContext } from "./VoiceContext";
+import { useVoiceContext } from "./hooks/useVoiceContext";
 
 export const GenerateButton:  React.FC<{ text: string }> = ({ text }) => {
   const { selectedVoice } = useVoiceContext();
