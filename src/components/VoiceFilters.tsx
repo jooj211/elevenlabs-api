@@ -1,17 +1,24 @@
+import { ActiveFilter, voiceLabels } from '@/types/ElevenLabs';
+import { formatLabel } from '@/utils/Labels';
 import { Select } from 'antd';
 import React from 'react';
 import { useVoiceContext } from './hooks/useVoiceContext';
 import useVoiceFilters from './hooks/useVoiceFilters';
-import { formatLabel } from '@/utils/Labels';
-import { ActiveFilter, voiceLabels } from '@/types/ElevenLabs';
 
 const VoiceFilters: React.FC = () => {
     const { activeFilters } = useVoiceContext();
     const { handleFilterChange } = useVoiceFilters();
+    const { voiceLabels } = useVoiceContext();
 
 
     const onFilterChange = (value: string | null, filterName: keyof ActiveFilter) => {
         handleFilterChange(value, filterName);
+        console.log("Active filters: "
+            + activeFilters['accent']
+            + " " + activeFilters['age']
+            + " " + activeFilters['category']
+            + " " + activeFilters['gender']
+            + " " + activeFilters['use_case']);
     };
 
     return (

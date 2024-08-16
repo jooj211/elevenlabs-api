@@ -10,7 +10,7 @@ import { renderLabels } from "@/utils/Labels";
 const VoiceList: React.FC = () => {
   const { voices, selectedVoice, loadingVoiceId, handleSelectVoice, handlePreviewClick } = useVoice();
 
-  console.log("VoiceList -> voices", { category: voices[0]?.category, ...voices[0]?.labels });
+  //console.log("VoiceList -> voices", { category: voices[0]?.category, ...voices[0]?.labels });
 
   return (
     <div className="voice-list-container">

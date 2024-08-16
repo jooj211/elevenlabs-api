@@ -17,6 +17,7 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     use_case: null,
 });
 
+
   useEffect(() => {
     const loadVoices = async () => {
       try {
@@ -30,6 +31,40 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     loadVoices();
   }, []);
+
+  useEffect(() => {
+    if (voices.length > 0) {
+        const voiceLabels = voices.reduce((acc, voice) => {
+            const labels = {
+                category: voice.category,
+                gender: voice.labels.gender,
+                accent: voice.labels.accent,
+                age: voice.labels.age,
+                use_case: voice.labels.use_case,
+            };
+
+            Object.keys(labels).forEach((key) => {
+                const labelKey = key as keyof typeof labels;
+                const value = labels[labelKey];
+
+                if (!acc[labelKey].includes(value)) {
+                    acc[labelKey].push(value);
+                }
+            });
+
+            return acc;
+        }, {
+            category: [],
+            gender: [],
+            accent: [],
+            age: [],
+            use_case: [],
+        } as Record<string, string[]>);
+
+        console.log('Voice Labels:', voiceLabels);
+    }
+}, [voices]);
+
 
   return (
     <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice, text, setText, activeFilters, setActiveFilters }}>

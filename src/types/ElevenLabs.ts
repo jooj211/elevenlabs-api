@@ -15,6 +15,7 @@ export interface VoiceContextType {
     setText: (text: string) => void;
     activeFilters: ActiveFilter;
     setActiveFilters: (filters: ActiveFilter) => void;
+    voiceLabels: Object;
 }
 
 export interface SpeechResponse {
