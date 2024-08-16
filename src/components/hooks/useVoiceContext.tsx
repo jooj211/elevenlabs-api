@@ -16,6 +16,14 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     age: null,
     use_case: null,
 });
+  const [voiceLabels, setVoiceLabels] = useState<Record<string, string[]>>({
+    category: [],
+    gender: [],
+    accent: [],
+    age: [],
+    use_case: [],
+  });
+
 
 
   useEffect(() => {
@@ -62,12 +70,13 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         } as Record<string, string[]>);
 
         console.log('Voice Labels:', voiceLabels);
+        setVoiceLabels(voiceLabels);
     }
 }, [voices]);
 
 
   return (
-    <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice, text, setText, activeFilters, setActiveFilters }}>
+    <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice, text, setText, activeFilters, setActiveFilters, voiceLabels }}>
       {children}
     </VoiceContext.Provider>
   );
