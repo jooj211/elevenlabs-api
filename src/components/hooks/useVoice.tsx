@@ -9,6 +9,7 @@ export const useVoice = () => {
 
   const handleSelectVoice = (voice: any) => {
     setSelectedVoice(voice);
+    console.log("Voice ID: " + voice.voice_id);
     message.success(`Voz selecionada: ${voice.name}`);
   };
 
