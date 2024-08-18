@@ -1,7 +1,7 @@
 "use client"
 
 import { VoiceProvider } from "@/components/hooks/useVoiceContext";
-import { VoiceSelection } from "@/components/VoiceSelection";
+import { VoiceGeneration } from "@/components/VoiceGeneration";
 import { Card } from "antd";
 
 
@@ -12,7 +12,7 @@ const Page = () => {
       <Card>
         <h1>Text to Speech Converter</h1>
         <VoiceProvider>
-          <VoiceSelection />
+          <VoiceGeneration />
         </VoiceProvider>
       </Card>
     </div>

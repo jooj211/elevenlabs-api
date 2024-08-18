@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { message } from 'antd';
 import { generatePreview } from "@/lib/elevenLabsService";
 import { useVoiceContext } from './useVoiceContext';
+import { Voice } from '@/types/ElevenLabs';
 
 export const useVoice = () => {
   const { voices, selectedVoice, setSelectedVoice } = useVoiceContext();
   const [loadingVoiceId, setLoadingVoiceId] = useState<string | null>(null);
 
-  const handleSelectVoice = (voice: any) => {
+  const handleSelectVoice = (voice: Voice) => {
     setSelectedVoice(voice);
+    console.log("Voice ID: " + voice.voice_id);
     message.success(`Voz selecionada: ${voice.name}`);
   };
 

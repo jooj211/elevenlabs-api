@@ -1,13 +1,11 @@
 import { GenerateButton } from '@/components/GenerateButton';
 import VoiceList from '@/components/VoiceList';
-import VoiceFilters from './VoiceFilters';
-import { fetchVoices } from '@/lib/elevenLabsService';
-import { VoiceContextType } from '@/types/ElevenLabs';
 import TextArea from 'antd/es/input/TextArea';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { VoiceProvider as ExternalVoiceProvider, useVoiceContext } from './hooks/useVoiceContext';
+import React from 'react';
+import { useVoiceContext } from './hooks/useVoiceContext';
+import VoiceFilters from './VoiceFilters';
 
-export const VoiceSelection: React.FC<{}> = ({}) => {
+export const VoiceGeneration: React.FC<{}> = ({}) => {
   const { text, setText } = useVoiceContext();
 
   return (

@@ -1,21 +1,22 @@
+import { Voice, VoiceContextType } from '@/types/ElevenLabs';
+import { createContext, useContext, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchVoices } from '@/lib/elevenLabsService';
-import { VoiceContextType } from '@/types/ElevenLabs';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { ActiveFilter } from '@/types/ElevenLabs';
+import { formatLabel } from '@/utils/labelUtils';
 
 const VoiceContext = createContext<VoiceContextType | undefined>(undefined);
 
 export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [voices, setVoices] = useState<any[]>([]);
+  const [voices, setVoices] = useState<Voice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<any | null>(null);
   const [text, setText] = useState<string>('');
-  const [activeFilters, setActiveFilters] = useState<ActiveFilter>({
-    category: null,
-    gender: null,
-    accent: null,
-    age: null,
-    use_case: null,
-});
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({
+    category: '',
+    gender: '',
+    accent: '',
+    age: '',
+    use_case: '',
+  });
   const [voiceLabels, setVoiceLabels] = useState<Record<string, string[]>>({
     category: [],
     gender: [],
@@ -24,14 +25,30 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     use_case: [],
   });
 
-
-
   useEffect(() => {
     const loadVoices = async () => {
       try {
         const fetchedVoices = await fetchVoices();
-        setVoices(fetchedVoices);
-        // console.log('Voices:', fetchedVoices);
+
+        console.log(typeof fetchedVoices[0]?.category);
+
+        const voices = fetchedVoices.map((voice: any) => {
+            return {
+            voice_id: voice.voice_id,
+            preview_url: voice.preview_url,
+            name: voice.name,
+            labels: {
+              'category': formatLabel(voice.category),
+              'gender': formatLabel(voice.labels.gender),
+              'accent': formatLabel(voice.labels.accent),
+              'age': formatLabel(voice.labels.age, '-'),
+              'use_case': formatLabel(voice.labels.use_case),
+            },
+            };
+        });
+
+        setVoices(voices);
+
       } catch (error) {
         console.error('Error fetching voices:', error);
       }
@@ -40,11 +57,11 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     loadVoices();
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
     if (voices.length > 0) {
         const voiceLabels = voices.reduce((acc, voice) => {
             const labels = {
-                category: voice.category,
+                category: voice.labels.category,
                 gender: voice.labels.gender,
                 accent: voice.labels.accent,
                 age: voice.labels.age,
@@ -74,9 +91,12 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 }, [voices]);
 
-
   return (
-    <VoiceContext.Provider value={{ voices, selectedVoice, setSelectedVoice, text, setText, activeFilters, setActiveFilters, voiceLabels }}>
+    <VoiceContext.Provider value={{
+      voices, setVoices, selectedVoice, setSelectedVoice,
+      text, setText, activeFilters, setActiveFilters,
+      voiceLabels, setVoiceLabels,
+    }}>
       {children}
     </VoiceContext.Provider>
   );
@@ -85,7 +105,7 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useVoiceContext = () => {
   const context = useContext(VoiceContext);
   if (!context) {
-    throw new Error('useVoiceContext deve ser usado em um VoiceProvider');
+    throw new Error('useVoiceContext must be used within a VoiceProvider');
   }
   return context;
 };

@@ -1,22 +1,26 @@
 "use client";
 
+import { formatLabel, showLabel } from "@/utils/labelUtils";
 import { PlayCircleOutlined } from "@ant-design/icons";
-import { Card, List, Spin } from "antd";
+import { Card, List, Spin, Tag } from "antd";
 import React from 'react';
 import "../styles/VoiceList.css";
 import { useVoice } from "./hooks/useVoice";
-import { renderLabels } from "@/utils/Labels";
+import { useVoiceContext } from "./hooks/useVoiceContext";
+import useVoiceFilters from "./hooks/useVoiceFilters";
 
 const VoiceList: React.FC = () => {
   const { voices, selectedVoice, loadingVoiceId, handleSelectVoice, handlePreviewClick } = useVoice();
+  const filteredVoices = useVoiceFilters().filteredVoices;
+  const activeFilters = useVoiceContext().activeFilters;
 
-  //console.log("VoiceList -> voices", { category: voices[0]?.category, ...voices[0]?.labels });
+  const filters = Object.keys(voices[0]?.labels || {});
 
   return (
     <div className="voice-list-container">
       <List
         grid={{ gutter: 16, column: 1 }}
-        dataSource={voices}
+        dataSource={filteredVoices}
         renderItem={voice => (
           <List.Item>
             <Card
@@ -25,7 +29,20 @@ const VoiceList: React.FC = () => {
               title={voice.name}
               extra={
                 <div className="labels-container">
-                  {renderLabels({ category: voice.category, ...voice.labels })}
+                        {filters.map((key) => {
+                          if ((voice.labels as Record<string, string>)[key] && showLabel((voice.labels as Record<string, string>)[key], activeFilters[key])) {
+                            return (
+                              <Tag
+                                key={key}
+                                className={`label ${key.toLowerCase()} `}
+                                data-label={formatLabel(key, '_')}
+                              >
+                                {formatLabel((voice.labels as Record<string, string>)[key], '_')}
+                              </Tag>
+                            );
+                          }
+                          return null;
+                        })}
                 </div>
               }
               headStyle={{ borderBottom: 'none' }}
@@ -46,6 +63,7 @@ const VoiceList: React.FC = () => {
       />
     </div>
   );
+  
 };
 
 export default VoiceList;

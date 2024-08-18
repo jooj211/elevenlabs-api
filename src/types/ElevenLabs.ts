@@ -8,14 +8,29 @@ export interface GenerateSpeechResponse {
 }
 
 export interface VoiceContextType {
-    voices: any[];
-    selectedVoice: any | null;
-    setSelectedVoice: (voice: any) => void;
+    voices: Voice[];
+    setVoices: (voices: Voice[]) => void
+    selectedVoice: Voice;
+    setSelectedVoice: (voice: Voice) => void;
     text: string;
     setText: (text: string) => void;
-    activeFilters: ActiveFilter;
-    setActiveFilters: (filters: ActiveFilter) => void;
-    voiceLabels: Object;
+    activeFilters: Record<string, string>;
+    setActiveFilters: (filters: Record<string, string>) => void;
+    voiceLabels: Record<string, string[]>;
+    setVoiceLabels: (labels: Record<string, string[]>) => void;
+}
+
+export interface Voice {
+    voice_id: string;
+    name: string;
+    preview_url: string;
+    labels: {
+        'category': string;
+        'gender': string;
+        'accent': string;
+        'age': string;
+        'use_case': string;
+    };
 }
 
 export interface SpeechResponse {
@@ -26,14 +41,6 @@ export interface VoiceSettings {
     stability: number;
     similarity_boost: number;
 }
-
-export const voiceLabels = {
-    'category': ["premade"],
-    'gender': ["male", "female"],
-    'accent': ["american", "british", "australian", "Transatlantic"],
-    'age': ["young", "middle-aged", "old"],
-    'use_case': ["conversational", "characters", "narration", "social media", "news"],
-};
 
 export interface ActiveFilter {
     'category': string | null;
